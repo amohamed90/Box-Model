@@ -1,26 +1,31 @@
 import React, {useState} from 'react';
 import Box from './Box';
+import NewBoxForm from './NewBoxForm';
 
 function Boxlist() {
-  const[boxlist, SetBoxlist] = useState(addBox({}));
-  const[boxform, setBoxForm] = useState();
-  
-  function addBox({width=200, height=200, backgroundColor='red'}) {
-    return (
-        <Box width={width} height={height} backgroundColor={backgroundColor} />
+  const [boxlist, setBoxlist] = useState([]);
+  const add = boxObj => setBoxlist(boxlist => [...boxlist, boxObj]);
+  console.log(boxlist)
+  const boxComponents = boxlist.map(box => (
+    <Box
+      key={box.id}
+      id={box.id}
+      width={box.width} 
+      height={box.height} 
+      backgroundColor={box.backgroundColor}
+    />
     )
-  }
+  )
 
   return (
     <div>
       <div className="Boxlist">
-        {boxlist}
+        {boxComponents}
       </div>
-      <NewBoxForm />
+      <NewBoxForm createBox={add}/>
     </div>
 
   )
 }
-
 export default Boxlist;
 
